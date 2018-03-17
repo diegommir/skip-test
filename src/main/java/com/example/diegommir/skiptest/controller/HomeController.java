@@ -15,7 +15,7 @@ public class HomeController {
 	 * 
 	 * @return Json
 	 */
-	@GetMapping
+	@GetMapping(path="home")
 	public String home() {
 		return "Hello world!";
 	}
