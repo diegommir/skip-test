@@ -3,6 +3,7 @@ package com.example.diegommir.skiptest.business;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.example.diegommir.skiptest.entity.Business;
 import com.example.diegommir.skiptest.entity.Order;
@@ -14,6 +15,7 @@ import com.example.diegommir.skiptest.repository.OrderRepository;
  * 
  * @author Diego Miranda
  */
+@Component
 public class OrderBO {
 	@Autowired
 	private BusinessBO businessBO;
