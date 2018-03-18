@@ -1,5 +1,6 @@
 package com.example.diegommir.skiptest.entity;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -12,6 +13,7 @@ import javax.validation.constraints.PositiveOrZero;
  * 
  * @author Diego Miranda
  */
+@Entity
 public class Item {
 	@Id
 	@GeneratedValue

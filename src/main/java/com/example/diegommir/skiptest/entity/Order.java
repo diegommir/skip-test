@@ -2,6 +2,7 @@ package com.example.diegommir.skiptest.entity;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -17,6 +18,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  * 
  * @author Diego Miranda
  */
+//Had to explicit a non-default name, cause "order" is a reserved word of
+//SQL and I was getting errors.
+@Entity(name="orders")
 public class Order {
 	@Id
 	@GeneratedValue

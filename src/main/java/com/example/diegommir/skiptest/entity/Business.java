@@ -1,5 +1,6 @@
 package com.example.diegommir.skiptest.entity;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
@@ -10,6 +11,7 @@ import javax.validation.constraints.Size;
  * 
  * @author Diego Miranda
  */
+@Entity
 public class Business {
 	@Id
 	@GeneratedValue

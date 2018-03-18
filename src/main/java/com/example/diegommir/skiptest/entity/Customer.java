@@ -2,6 +2,7 @@ package com.example.diegommir.skiptest.entity;
 
 import java.time.LocalDate;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  * 
  * @author Diego Miranda
  */
+@Entity
 public class Customer {
 	@Id
 	@GeneratedValue
