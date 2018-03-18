@@ -1,9 +1,11 @@
 package com.example.diegommir.skiptest.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.example.diegommir.skiptest.entity.Business;
 import com.example.diegommir.skiptest.entity.Product;
 
 /**
@@ -21,10 +23,18 @@ public interface ProductRepository extends JpaRepository<Product, Long>  {
 	Optional<Product> findById(Long id);
 
 	/**
-	 * Returns the first Product that match with informed name.
+	 * Returns a list of Products based on the given business.
 	 * 
-	 * @param name String
-	 * @return The desired Product
+	 * @param business
+	 * @return a list of Products
 	 */
-	Product findByName(String name);
+	List<Product> findByBusiness(Business business);
+
+	/**
+	 * Returns a list of Products based on the given name.
+	 * 
+	 * @param name
+	 * @return a list of Products
+	 */
+	List<Product> findByName(String name);
 }

@@ -3,6 +3,7 @@ package com.example.diegommir.skiptest.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
@@ -31,6 +32,9 @@ public class Product {
 	@PositiveOrZero
 	private Double price;
 
+	@ManyToOne
+	private Business business;
+
 	/**
 	 * Default constructor.
 	 */
@@ -44,12 +48,14 @@ public class Product {
 	 * @param id
 	 * @param name
 	 * @param description
+	 * @param business
 	 */
-	public Product(Long id, String name, String description) {
+	public Product(Long id, String name, String description, Business business) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
+		this.business = business;
 	}
 
 	/**
@@ -106,5 +112,19 @@ public class Product {
 	 */
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+
+	/**
+	 * @return the business
+	 */
+	public Business getBusiness() {
+		return business;
+	}
+
+	/**
+	 * @param business the business to set
+	 */
+	public void setBusiness(Business business) {
+		this.business = business;
 	}
 }
