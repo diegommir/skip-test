@@ -61,7 +61,7 @@ public class ItemController {
 	 * @return Json representing the newly created Item
 	 * @throws ResourceNotFoundException if the Business or the Order does not exist
 	 */
-	@PostMapping(path="/business/{businessId}/order/{orderId}/item")
+	@PostMapping("/business/{businessId}/order/{orderId}/item")
 	public Item create(@PathVariable Long businessId, @PathVariable Long orderId, @Valid @RequestBody Item item) {
 		Order order = orderBO.getOrder(businessId, orderId);
 
@@ -87,7 +87,7 @@ public class ItemController {
 	 * @return Json representing the updated Item
 	 * @throws ResourceNotFoundException if the Business, the Order or the Item does not exist
 	 */
-	@PutMapping("/{id}")
+	@PutMapping("/business/{businessId}/order/{orderId}/item/{id}")
 	public Item update(@PathVariable Long businessId, @PathVariable Long orderId, @PathVariable Long id, @Valid @RequestBody Item item) {
 		Order order = orderBO.getOrder(businessId, orderId);
 
@@ -116,7 +116,7 @@ public class ItemController {
 	 * @param id of the order
 	 * @throws ResourceNotFoundException if the Business or the Order does not exist
 	 */
-	@DeleteMapping(path="/business/{businessId}/order/{id}")
+	@DeleteMapping("/business/{businessId}/order/{orderId}/item/{id}")
 	public void delete(@PathVariable Long businessId, @PathVariable Long orderId, @PathVariable Long id) {
 		Order order = orderBO.getOrder(businessId, orderId);
 

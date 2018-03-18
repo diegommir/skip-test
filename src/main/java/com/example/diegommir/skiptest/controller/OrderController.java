@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.diegommir.skiptest.business.BusinessBO;
+import com.example.diegommir.skiptest.business.CustomerBO;
 import com.example.diegommir.skiptest.business.OrderBO;
 import com.example.diegommir.skiptest.entity.Business;
 import com.example.diegommir.skiptest.entity.Customer;
@@ -32,6 +33,9 @@ import com.example.diegommir.skiptest.repository.OrderRepository;
 public class OrderController {
 	@Autowired
 	private BusinessBO businessBO;
+
+	@Autowired
+	private CustomerBO customerBO;
 
 	@Autowired
 	private OrderBO orderBO;
@@ -77,19 +81,21 @@ public class OrderController {
 	 * @param businessId
 	 * @param order
 	 * @return Json representing the newly created Order
-	 * @throws ResourceNotFoundException if the Business does not exist
+	 * @throws ResourceNotFoundException if the Business or the Customer does not exist
 	 */
 	@PostMapping(path="/business/{businessId}/order")
 	public Order create(@PathVariable Long businessId, @Valid @RequestBody Order order) {
 		Business business = businessBO.getBusiness(businessId);
 
+		//TODO Customer info
+		Customer customer = customerBO.getCustomer(4L);
+
 		order.setStatus(OrderStatus.CREATING);
 		order.setCreationDate(LocalDateTime.now());
 		order.setLastChangeDate(LocalDateTime.now());
 		order.setBusiness(business);
-		//TODO Customer info
-		order.setAddress("");
-		order.setCustomer(new Customer());
+		order.setAddress(customer.getAddress());
+		order.setCustomer(customer);
 		order = orderRepository.save(order);
 		return order;
 	}
