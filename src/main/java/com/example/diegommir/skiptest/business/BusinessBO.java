@@ -10,6 +10,8 @@ import com.example.diegommir.skiptest.exception.ResourceNotFoundException;
 import com.example.diegommir.skiptest.repository.BusinessRepository;
 
 /**
+ * Business class with common methods related to the Business entity.
+ * 
  * @author Diego Miranda
  */
 @Component
@@ -18,7 +20,7 @@ public class BusinessBO {
 	private BusinessRepository repository;
 
 	/**
-	 * Internal method that search for and validate a Order based on params.
+	 * Internal method that search for and validate a Business based on params.
 	 * 
 	 * @param id of the Business
 	 * @return Business
