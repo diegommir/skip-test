@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.diegommir.skiptest.business.BusinessBO;
 import com.example.diegommir.skiptest.business.OrderBO;
@@ -27,6 +28,7 @@ import com.example.diegommir.skiptest.repository.OrderRepository;
  * 
  * @author Diego Miranda
  */
+@RestController
 public class OrderController {
 	@Autowired
 	private BusinessBO businessBO;
