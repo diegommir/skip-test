@@ -7,7 +7,7 @@ We are using the following stack on this project:
 - spring-boot for simpler configs.
 - spring-web for the REST api.
 - spring-jpa and hibernate to ORM.
-- spring-security and JJWT to authentication and authorization.
+- spring-security authentication and authorization.
 - MySQL database.
 
 ## Author
