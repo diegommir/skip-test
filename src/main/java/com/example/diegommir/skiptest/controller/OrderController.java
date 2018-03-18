@@ -2,7 +2,6 @@ package com.example.diegommir.skiptest.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -14,12 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.example.diegommir.skiptest.business.BusinessBO;
+import com.example.diegommir.skiptest.business.OrderBO;
 import com.example.diegommir.skiptest.entity.Business;
 import com.example.diegommir.skiptest.entity.Customer;
 import com.example.diegommir.skiptest.entity.Order;
 import com.example.diegommir.skiptest.entity.OrderStatus;
 import com.example.diegommir.skiptest.exception.ResourceNotFoundException;
-import com.example.diegommir.skiptest.repository.BusinessRepository;
 import com.example.diegommir.skiptest.repository.OrderRepository;
 
 /**
@@ -29,7 +29,10 @@ import com.example.diegommir.skiptest.repository.OrderRepository;
  */
 public class OrderController {
 	@Autowired
-	private BusinessRepository businessRepository;
+	private BusinessBO businessBO;
+
+	@Autowired
+	private OrderBO orderBO;
 
 	@Autowired
 	private OrderRepository orderRepository;
@@ -44,7 +47,7 @@ public class OrderController {
 	 */
 	@GetMapping("/business/{businessId}/order")
 	public List<Order> list(@PathVariable Long businessId) {
-		Business business = this.getBusiness(businessId);
+		Business business = businessBO.getBusiness(businessId);
 
 		List<Order> result = orderRepository.findByBusiness(business);
 		return result;
@@ -76,7 +79,7 @@ public class OrderController {
 	 */
 	@PostMapping(path="/business/{businessId}/order")
 	public Order create(@PathVariable Long businessId, @Valid @RequestBody Order order) {
-		Business business = this.getBusiness(businessId);
+		Business business = businessBO.getBusiness(businessId);
 
 		order.setStatus(OrderStatus.CREATING);
 		order.setCreationDate(LocalDateTime.now());
@@ -101,7 +104,7 @@ public class OrderController {
 	 */
 	@PutMapping("/business/{businessId}/order/{id}")
 	public Order update(@PathVariable Long businessId, @PathVariable Long id, @Valid @RequestBody Order order) {
-		Order result = this.getOrder(businessId, id);
+		Order result = orderBO.getOrder(businessId, id);
 
 		//If the courier didn't get the order yet
 		OrderStatus status = result.getStatus();
@@ -127,7 +130,7 @@ public class OrderController {
 	 */
 	@PutMapping("/business/{businessId}/order/{id}/checkout")
 	public Order checkout(@PathVariable Long businessId, @PathVariable Long id) {
-		Order order = this.getOrder(businessId, id);
+		Order order = orderBO.getOrder(businessId, id);
 
 		if (order.getStatus() != OrderStatus.CREATING) {
 			//TODO Create a custom exception
@@ -150,7 +153,7 @@ public class OrderController {
 	 */
 	@PutMapping("/business/{businessId}/order/{id}/start")
 	public Order startPreparing(@PathVariable Long businessId, @PathVariable Long id) {
-		Order order = this.getOrder(businessId, id);
+		Order order = orderBO.getOrder(businessId, id);
 
 		if (order.getStatus() != OrderStatus.OPEN) {
 			//TODO Create a custom exception
@@ -173,7 +176,7 @@ public class OrderController {
 	 */
 	@PutMapping("/business/{businessId}/order/{id}/ready")
 	public Order ready(@PathVariable Long businessId, @PathVariable Long id) {
-		Order order = this.getOrder(businessId, id);
+		Order order = orderBO.getOrder(businessId, id);
 
 		if (order.getStatus() != OrderStatus.PREPARING) {
 			//TODO Create a custom exception
@@ -196,7 +199,7 @@ public class OrderController {
 	 */
 	@PutMapping("/business/{businessId}/order/{id}/pickup")
 	public Order pickup(@PathVariable Long businessId, @PathVariable Long id) {
-		Order order = this.getOrder(businessId, id);
+		Order order = orderBO.getOrder(businessId, id);
 
 		if (order.getStatus() != OrderStatus.READY) {
 			//TODO Create a custom exception
@@ -219,7 +222,7 @@ public class OrderController {
 	 */
 	@PutMapping("/business/{businessId}/order/{id}/delivered")
 	public Order delivered(@PathVariable Long businessId, @PathVariable Long id) {
-		Order order = this.getOrder(businessId, id);
+		Order order = orderBO.getOrder(businessId, id);
 
 		if (order.getStatus() != OrderStatus.ON_DELIVERY) {
 			//TODO Create a custom exception
@@ -242,7 +245,7 @@ public class OrderController {
 	@DeleteMapping(path="/business/{businessId}/order/{id}")
 	@PutMapping("/business/{businessId}/order/{id}/cancel")
 	public void cancel(@PathVariable Long businessId, @PathVariable Long id) {
-		Order order = this.getOrder(businessId, id);
+		Order order = orderBO.getOrder(businessId, id);
 
 		OrderStatus status = order.getStatus();
 		if (status != OrderStatus.CREATING && status != OrderStatus.OPEN) {
@@ -253,47 +256,5 @@ public class OrderController {
 		order.setLastChangeDate(LocalDateTime.now());
 		order.setStatus(OrderStatus.CANCELED);
 		orderRepository.save(order);
-	}
-
-	/**
-	 * Internal method that search for and validate a Order based on params.
-	 * 
-	 * @param id of the Business
-	 * @return Business
-	 * @throws ResourceNotFoundException if the Business does not exist
-	 */
-	private Business getBusiness(Long id) {
-		Optional<Business> business = businessRepository.findById(id);
-
-		if (!business.isPresent()) {
-			throw new ResourceNotFoundException("Business not found. Id: " + id);
-		}
-
-		return business.get();
-	}
-
-	/**
-	 * Internal method that search for and validate a Order based on params.
-	 * 
-	 * @param businessId
-	 * @param id of the Order
-	 * @return Order
-	 * @throws ResourceNotFoundException if the Business or the Order does not exist
-	 */
-	private Order getOrder(Long businessId, Long id) {
-		Business business = this.getBusiness(businessId);
-
-		Optional<Order> order = orderRepository.findById(id);
-
-		if (!order.isPresent()) {
-			throw new ResourceNotFoundException("Order not found. Id: " + id);
-		}
-
-		//If the order doesn't belong to this business
-		if (!order.get().getBusiness().getId().equals(business.getId())) {
-			throw new ResourceNotFoundException("Order not found. Id: " + id);
-		}
-
-		return order.get();
 	}
 }
