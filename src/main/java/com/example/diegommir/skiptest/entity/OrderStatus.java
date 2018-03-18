@@ -6,7 +6,9 @@ package com.example.diegommir.skiptest.entity;
  * @author Diego Miranda
  */
 public enum OrderStatus {
+	CREATING,
 	OPEN,
+	PREPARING,
 	READY,
 	ON_DELIVERY,
 	DELIVERED,
