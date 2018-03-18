@@ -1,0 +1,20 @@
+<h4 class="mb-3">New Product</h4>
+
+<input type="hidden" id="id">
+<div class="mb-3">
+	<label for="firstName">Product Name</label>
+	<input type="text" class="form-control" id="name" placeholder="" value="" required>
+	<div class="invalid-feedback">
+		Valid name is required.
+	</div>
+</div>
+<div class="mb-3">
+	<label for="firstName">Product Description</label>
+	<input type="text" class="form-control" id="description" placeholder="" value="" required>
+	<div class="invalid-feedback">
+		Valid description is required.
+	</div>
+</div>
+<hr class="mb-4">
+<button class="btn btn-primary" onclick="saveProduct(); return false;">Save</button>
+<button class="btn btn-secondary" onclick="openProduct();">Back</button>
