@@ -1,22 +1,14 @@
 package com.example.diegommir.skiptest.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 
 /**
- * Entity class representing a Product.
+ * Entity class representing a Business.
  * 
  * @author Diego Miranda
  */
-@Entity
-public class Product {
-	@Id
-	@GeneratedValue
+public class Business {
 	private Long id;
 
 	@NotBlank
@@ -24,17 +16,17 @@ public class Product {
 	private String name;
 
 	@NotBlank
-	@Size(min=3, max=100)
+	@Size(min=3, max=150)
 	private String description;
 
-	@NotNull
-	@PositiveOrZero
-	private Double price;
+	@NotBlank
+	@Size(min=3, max=150)
+	private String address;
 
 	/**
 	 * Default constructor.
 	 */
-	public Product() {
+	public Business() {
 		super();
 	}
 
@@ -44,12 +36,14 @@ public class Product {
 	 * @param id
 	 * @param name
 	 * @param description
+	 * @param address
 	 */
-	public Product(Long id, String name, String description) {
+	public Business(Long id, String name, String description, String address) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
+		this.address = address;
 	}
 
 	/**
@@ -95,16 +89,16 @@ public class Product {
 	}
 
 	/**
-	 * @return the price
+	 * @return the address
 	 */
-	public Double getPrice() {
-		return price;
+	public String getAddress() {
+		return address;
 	}
 
 	/**
-	 * @param price the price to set
+	 * @param address the address to set
 	 */
-	public void setPrice(Double price) {
-		this.price = price;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 }
